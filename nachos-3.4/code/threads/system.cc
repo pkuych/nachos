@@ -18,6 +18,9 @@ Interrupt *interrupt;			// interrupt status
 Statistics *stats;			// performance metrics
 Timer *timer;				// the hardware timer device,
 					// for invoking context switches
+/*================== lab 1 ======================*/                    
+bool tids[THREAD_POOL_SIZE] = {false};
+/*================== lab 1 ======================*/
 
 #ifdef FILESYS_NEEDED
 FileSystem  *fileSystem;
@@ -195,3 +198,24 @@ Cleanup()
     Exit(0);
 }
 
+//--------------------------------------------------------------------
+// AllocateTid
+// Allocate a tid when new a thread
+//--------------------------------------------------------------------
+int AllocateTid() {
+    for (int i = 0; i < THREAD_POOL_SIZE; i++) {
+        if (tids[i] == false) {
+            tids[i] = true; //标记为已分配
+            return i;
+        }
+    }
+    return -1;
+}
+
+//-------------------------------------------------------------------
+// FreeTid
+// Free a tid when a thread is destoried
+//-------------------------------------------------------------------
+void FreeTid(int tid) {
+    tids[tid] = false;
+}

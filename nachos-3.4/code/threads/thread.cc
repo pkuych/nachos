@@ -19,6 +19,7 @@
 #include "switch.h"
 #include "synch.h"
 #include "system.h"
+#include <unistd.h>
 
 #define STACK_FENCEPOST 0xdeadbeef	// this is put at the top of the
 					// execution stack, for detecting 
@@ -35,6 +36,15 @@
 Thread::Thread(char* threadName)
 {
     name = threadName;
+
+    userId = getuid();
+    threadId = AllocateTid();
+    if (threadId == -1) {
+        printf("Thread: %d creation failed\n", threadId);
+        ASSERT(threadId > 0);
+        return ;
+    }
+
     stackTop = NULL;
     stack = NULL;
     status = JUST_CREATED;
@@ -62,6 +72,7 @@ Thread::~Thread()
     ASSERT(this != currentThread);
     if (stack != NULL)
 	DeallocBoundedArray((char *) stack, StackSize * sizeof(int));
+    FreeTid(this->threadId);
 }
 
 //----------------------------------------------------------------------

@@ -22,12 +22,22 @@ extern void Initialize(int argc, char **argv); 	// Initialization,
 extern void Cleanup();				// Cleanup, called when
 						// Nachos is done.
 
+//------------------lab1--------------						
+extern int AllocateTid();  //Allocate a tid when new a thread
+extern void FreeTid(int tid);		//Free a tid when a thread is destoried	
+//------------------lab1--------------
+
 extern Thread *currentThread;			// the thread holding the CPU
 extern Thread *threadToBeDestroyed;  		// the thread that just finished
 extern Scheduler *scheduler;			// the ready list
 extern Interrupt *interrupt;			// interrupt status
 extern Statistics *stats;			// performance metrics
 extern Timer *timer;				// the hardware alarm clock
+
+/*=====================lab 1====================*/
+#define THREAD_POOL_SIZE 128  //定义最大线程数
+extern bool tids[THREAD_POOL_SIZE]; //记录每个tid被分配的状态
+/*=====================lab 1====================*/
 
 #ifdef USER_PROGRAM
 #include "machine.h"

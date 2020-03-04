@@ -100,9 +100,38 @@ class Thread {
 						// overflowed its stack
     void setStatus(ThreadStatus st) { status = st; }
     char* getName() { return (name); }
-    void Print() { printf("%s, ", name); }
+
+    void Print() { 
+      char _status[10];
+      switch (status)
+      {
+      case JUST_CREATED:
+        strcpy(_status, "JUST_CREATED");
+        break;
+      case RUNNING:
+        strcpy(_status, "RUNNING");
+        break;
+      case READY:
+        strcpy(_status, "READY");
+        break;
+      case BLOCKED:
+        strcpy(_status, "BLOCKED");
+        break;
+      default:
+        break;
+      }
+      printf("name: %s, ThreadId: %d, Status: %s\n", name, threadId, _status); 
+    }
+
+    //-------------lab1 add------------
+    int getUid() { return userId; }
+    int getThreadId() { return threadId; }
 
   private:
+    
+    int userId;
+    int threadId;
+    //---------lab1 add----------------- 
     // some of the private data for this class is listed above
     
     int* stack; 	 		// Bottom of the stack 

@@ -27,9 +27,10 @@ include ../Makefile.dep
 # DO NOT DELETE THIS LINE -- make depend uses it
 # DEPENDENCIES MUST END AT END OF FILE
 main.o: ../threads/main.cc /usr/include/stdc-predef.h \
- ../threads/copyright.h ../threads/utility.h ../threads/bool.h \
- ../machine/sysdep.h ../threads/copyright.h /usr/include/stdio.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+ ../threads/copyright.h ../threads/system.h ../threads/utility.h \
+ ../threads/bool.h ../machine/sysdep.h ../threads/copyright.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
@@ -39,13 +40,12 @@ main.o: ../threads/main.cc /usr/include/stdc-predef.h \
  /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/xlocale.h ../threads/system.h ../threads/thread.h \
- ../machine/machine.h ../threads/utility.h ../machine/translate.h \
- ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../threads/scheduler.h ../threads/list.h \
- ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
- ../machine/timer.h ../filesys/synchdisk.h ../machine/disk.h \
- ../threads/synch.h
+ /usr/include/xlocale.h ../threads/thread.h ../machine/machine.h \
+ ../threads/utility.h ../machine/translate.h ../machine/disk.h \
+ ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../threads/scheduler.h ../threads/list.h ../machine/interrupt.h \
+ ../threads/list.h ../machine/stats.h ../machine/timer.h \
+ ../filesys/synchdisk.h ../machine/disk.h ../threads/synch.h
 list.o: ../threads/list.cc /usr/include/stdc-predef.h \
  ../threads/copyright.h ../threads/list.h ../threads/utility.h \
  ../threads/bool.h ../machine/sysdep.h ../threads/copyright.h \
@@ -159,7 +159,10 @@ thread.o: ../threads/thread.cc /usr/include/stdc-predef.h \
  ../threads/synch.h ../threads/list.h ../threads/system.h \
  ../threads/scheduler.h ../machine/interrupt.h ../threads/list.h \
  ../machine/stats.h ../machine/timer.h ../filesys/synchdisk.h \
- ../machine/disk.h ../threads/synch.h
+ ../machine/disk.h ../threads/synch.h /usr/include/unistd.h \
+ /usr/include/i386-linux-gnu/bits/posix_opt.h \
+ /usr/include/i386-linux-gnu/bits/environments.h \
+ /usr/include/i386-linux-gnu/bits/confname.h /usr/include/getopt.h
 utility.o: ../threads/utility.cc /usr/include/stdc-predef.h \
  ../threads/copyright.h ../threads/utility.h ../threads/bool.h \
  ../machine/sysdep.h ../threads/copyright.h /usr/include/stdio.h \
@@ -175,9 +178,9 @@ utility.o: ../threads/utility.cc /usr/include/stdc-predef.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../threads/stdarg.h
 threadtest.o: ../threads/threadtest.cc /usr/include/stdc-predef.h \
- ../threads/copyright.h ../threads/system.h ../threads/utility.h \
- ../threads/bool.h ../machine/sysdep.h ../threads/copyright.h \
- /usr/include/stdio.h /usr/include/features.h \
+ ../threads/copyright.h ../machine/elevatortest.h ../threads/copyright.h \
+ ../threads/system.h ../threads/utility.h ../threads/bool.h \
+ ../machine/sysdep.h /usr/include/stdio.h /usr/include/features.h \
  /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
@@ -193,8 +196,7 @@ threadtest.o: ../threads/threadtest.cc /usr/include/stdc-predef.h \
  ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
  ../threads/scheduler.h ../threads/list.h ../machine/interrupt.h \
  ../threads/list.h ../machine/stats.h ../machine/timer.h \
- ../filesys/synchdisk.h ../machine/disk.h ../threads/synch.h \
- ../machine/elevatortest.h
+ ../filesys/synchdisk.h ../machine/disk.h ../threads/synch.h
 interrupt.o: ../machine/interrupt.cc /usr/include/stdc-predef.h \
  ../threads/copyright.h ../machine/interrupt.h ../threads/list.h \
  ../threads/copyright.h ../threads/utility.h ../threads/bool.h \
