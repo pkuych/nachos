@@ -56,7 +56,13 @@ Scheduler::ReadyToRun (Thread *thread)
     DEBUG('t', "Putting thread %s on ready list.\n", thread->getName());
 
     thread->setStatus(READY);
+    // //-------------优先级抢占----------
+    // readyList->SortedInsert((void *)thread, thread->getPriority());
+    // //-------------------------------
+
+    //-------------时间片轮转----------
     readyList->Append((void *)thread);
+    //--------------------------------
 }
 
 //----------------------------------------------------------------------
@@ -70,7 +76,15 @@ Scheduler::ReadyToRun (Thread *thread)
 Thread *
 Scheduler::FindNextToRun ()
 {
+
+    //--------------时间片轮转----------
     return (Thread *)readyList->Remove();
+    //---------------------------------
+
+    // //---------------优先级抢占--------
+    // int i;
+    // return (Thread *)readyList->SortedRemove(&i);
+    // //-------------------------------
 }
 
 //----------------------------------------------------------------------

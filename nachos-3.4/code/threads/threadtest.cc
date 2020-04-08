@@ -11,10 +11,149 @@
 
 #include "copyright.h"
 #include "elevatortest.h"
+#include "synch.h"
 #include "system.h"
 
 // testnum is set in main.cc
 int testnum = 1;
+
+// int buffer[10];
+// int items = 0;
+// int space = 10;
+// Lock *lock = new Lock("lock"); 
+// Condition *isFull = new Condition("full");
+// Condition *isEmpty = new Condition("empty");
+
+// int buffer[10];
+// int i = 0;
+// Semaphore *full = new Semaphore("full",0);
+// Semaphore *empty = new Semaphore("empty", 10);
+// Semaphore *mutex = new Semaphore("mutex", 1);
+
+// void producer(int n) {
+// 	int item;
+// 	while (n--) {
+// 		lock->Acquire();
+// 		while (space == 0) {
+// 			printf("Buffer is full, the producer will sleep!\n");
+// 			isFull->Wait(lock);
+// 		}
+// 		item = Random() % 10;
+// 		buffer[items] = item;
+// 		items++;
+// 		space--;
+// 		printf("producer add %d in buffer, buffer size: %d\n", item, items);
+// 		if (items == 1) {
+// 			isEmpty->Signal(lock);
+// 		}
+// 		lock->Release();
+// 	}
+// }
+
+// void producer(int n) {
+// 	int item;
+// 	while(n--) {
+// 		empty->P();
+// 		mutex->P();
+// 		item = Random() % 10;
+// 		buffer[i] = item;
+// 		i++;
+// 		printf("producer add %d in buffer, buffer size: %d\n", item, i);
+// 		mutex->V();
+// 		full->V();
+// 	}
+// }
+
+// void consumer(int n) {
+// 	int item;
+// 	while (n--)
+// 	{
+// 		lock->Acquire();
+// 		while (items == 0) {
+// 			printf("Buffer is empty, the consumer will sleep!\n");
+// 			isEmpty->Wait(lock);
+// 		}
+// 		item = buffer[items - 1];
+// 		items--;
+// 		space++;
+// 		printf("consumer remove %d in buffer, buffer size: %d\n", item, items);
+// 		if (space == 1) {
+// 			isFull->Signal(lock);
+// 		}
+// 		lock->Release();
+// 	}
+// }
+
+// void consumer(int n) {
+// 	int item;
+// 	while (n--) {
+// 		full->P();
+// 		mutex->P();
+// 		item = buffer[i];
+// 		i--;
+// 		printf("consumer remove %d in buffer, buffer size: %d\n", item, i);
+// 		mutex->V();
+// 		empty->V();
+// 	}
+// }
+
+// void producer_consumer(){
+// 	Thread *t1 = new Thread("producer");
+// 	Thread *t2 = new Thread("consumer");
+// 	t1->Fork(producer, (void*)15);
+// 	t2->Fork(consumer, (void*)20);
+// }
+
+//---------------------------------------------------------------------
+// 读写锁测试
+//---------------------------------------------------------------------
+Rwlock *rwlock;
+
+int buffer[20] = {0};
+int i = 0;
+
+void writer(int n){
+	int item;
+	while(n--){
+		rwlock->RwAcquire();
+		item = Random() % 10;
+		buffer[i++] = item;
+		printf("%s write %d in buffer(size:%d)\n", currentThread->getName(), item, i); 
+		if (n == 1) {
+			printf("%s Yield!\n", currentThread->getName());
+			currentThread->Yield();
+		}
+		rwlock->RwRelease();
+	}
+}
+
+void reader(int n){
+	int item;
+	while (n--)
+	{
+		rwlock->RdAcquire();
+		item = buffer[Random() % 20];
+		printf("%s read %d from buffer(size:%d)\n", currentThread->getName(), item, i);
+		if (n == 1) {
+			printf("%s Yield\n", currentThread->getName());
+			currentThread->Yield();
+		}
+		rwlock->RdRelease();
+	}
+	
+}
+
+void rwlockTest() {
+	rwlock = new Rwlock("rwlock");
+	Thread *t1 = new Thread("writer1");
+	Thread *t2 = new Thread("reader1");
+	Thread *t3 = new Thread("writer2");
+	Thread *t4 = new Thread("reader2");
+	t1->Fork(writer, (void*)5);
+	t2->Fork(reader, (void*)5);
+	t3->Fork(writer, (void*)5);
+	t4->Fork(reader, (void*)5);
+}
 
 //----------------------------------------------------------------------
 // SimpleThread
@@ -107,6 +246,12 @@ void ThreadTest() {
 		break;
 	case 2:
 		ThreadTest2();
+		break;
+	case 3:
+		// producer_consumer();
+		break;
+	case 4:
+		rwlockTest();
 		break;
 	case 100:
         TS();

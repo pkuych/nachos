@@ -19,6 +19,7 @@
 #include "system.h"
 #include "addrspace.h"
 #include "noff.h"
+#include "machine.h"
 #ifdef HOST_SPARC
 #include <strings.h>
 #endif
@@ -66,6 +67,7 @@ AddrSpace::AddrSpace(OpenFile *executable)
     unsigned int i, size;
 
     executable->ReadAt((char *)&noffH, sizeof(noffH), 0);
+    //数据存储方式统一为大端法
     if ((noffH.noffMagic != NOFFMAGIC) && 
 		(WordToHost(noffH.noffMagic) == NOFFMAGIC))
     	SwapHeader(&noffH);

@@ -80,6 +80,29 @@ class Lock {
   private:
     char* name;				// for debugging
     // plus some other stuff you'll need to define
+    Semaphore *lock;  //  信号量作为唯一同步元语
+    Thread *owner;  //  持有锁的线程
+};
+
+class Rwlock {
+  public:
+    Rwlock(char* debugName);
+    ~Rwlock();
+    char* getName() {return name;}
+
+    void RdAcquire();
+    void RwAcquire();
+    void RdRelease();
+    void RwRelease();
+
+    bool isHeldByCurrentThread();
+
+  private:
+    char* name;
+    int readers;
+    Lock *r_lock;
+    Semaphore *w_lock;
+    Thread *owner;
 };
 
 // The following class defines a "condition variable".  A condition
@@ -132,5 +155,6 @@ class Condition {
   private:
     char* name;
     // plus some other stuff you'll need to define
+    List *queue;
 };
 #endif // SYNCH_H

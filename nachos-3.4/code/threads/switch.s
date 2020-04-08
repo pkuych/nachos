@@ -147,7 +147,7 @@ ThreadRoot:
 			   *	call WhenDonePC();
 			   */
 	call	StartupPC,0
-	nop
+	nopC
 	call	%l0, 1	
 	mov	%l1, %o0   /* Using delay slot to setup argument to InitialPC */
 	call	%l2, 0
